@@ -1,8 +1,5 @@
 package CSC_346_Group3.src;
 
-import java.net.ContentHandler;
-import java.util.ArrayList;
-
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -25,7 +22,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ParseHandler extends DefaultHandler {
 
     @Override
-    public void startDocument() throws SAXException {
+    public void startDocument() {
         System.out.println("start of the document: ");
     }
 
@@ -35,6 +32,14 @@ public class ParseHandler extends DefaultHandler {
         for (String element : elements) {
             try {
                 System.out.println(element);
+            } catch (Exception e) {
+                System.out.println("ERROR IN PARSING ELEMENT START!");
+                e.printStackTrace();
+            }
+        }
+        for (int i = 0; i < attributes.getLength(); i++) {
+            try {
+                System.out.println(attributes.getValue(i));
             } catch (Exception e) {
                 System.out.println("ERROR IN PARSING ELEMENT START!");
                 e.printStackTrace();
@@ -75,7 +80,7 @@ public class ParseHandler extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {
+    public void endDocument() {
         System.out.println("end of the document: ");
     }
 }
