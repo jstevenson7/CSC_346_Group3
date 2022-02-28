@@ -87,7 +87,7 @@ public class ParseHandler extends DefaultHandler {
     @Override
     public void endDocument() {
         System.out.println("end of the document: ");
-        System.out.println("Errors: ");
+        System.out.println("Non-fatal errors while parsing: ");
         for (String i : errorStrings) {
             System.out.println(i);
         }
