@@ -41,7 +41,7 @@ public class ParseHandler extends DefaultHandler {
             try {
                 System.out.println(attributes.getValue(i));
             } catch (Exception e) {
-                System.out.println("ERROR IN PARSING ELEMENT START!");
+                System.out.println("ERROR IN PARSING ATTRIBUTE!");
                 e.printStackTrace();
             }
         }
@@ -49,20 +49,15 @@ public class ParseHandler extends DefaultHandler {
 
     @Override
     public void characters(char ch[], int start, int length) {
-        boolean isRealString = false;
         for (int i = start; i < start + length; i++) {
             try {
                 if (ch[i] != '\n' && ch[i] != '\t' && ch[i] != ' ') {
                     System.out.print(ch[i]);
-                    isRealString = true;
                 }
             } catch (Exception e) {
                 System.out.println("ERROR IN PARSING CHAR!");
                 e.printStackTrace();
             }
-        }
-        if (isRealString) {
-            System.out.println();
         }
     }
 
