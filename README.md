@@ -90,7 +90,7 @@ After **endElement()** the only thing left to do is signal the end of the docume
 ##Calling the parser in *main()*
 In the *main()* method you will instantiate this class and pass it to a SAXParser's *parse()* method alongside a File object corresponding to XML file to be parsed. 
 ```Java
- File xmlFile = new File("test_xml_folder/weather.xml");
+        File xmlFile = new File("test_xml_folder/weather.xml");
         ParseHandler handler = new ParseHandler();
 
         try {
