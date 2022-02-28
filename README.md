@@ -1,6 +1,6 @@
 # SAX Parser Tutorial for Java
 
-##Defining the *ParseHandler* class
+## Defining the *ParseHandler* class
 To use the SAX package, create a class that extends DefaultHandler. 
 This will contain the methods that are called when XML attributes are identified by the parser. 
 
@@ -87,7 +87,7 @@ After **endElement()** the only thing left to do is signal the end of the docume
     }
 ```
 
-##Calling the parser in *main()*
+## Calling the parser in *main()*
 In the *main()* method you will instantiate this class and pass it to a SAXParser's *parse()* method alongside a File object corresponding to XML file to be parsed. 
 ```Java
         File xmlFile = new File("test_xml_folder/weather.xml");
