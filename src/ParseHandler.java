@@ -69,12 +69,12 @@ public class ParseHandler extends DefaultHandler {
 
     @Override
     public void warning(SAXParseException e) throws SAXException {
-        errorStrings.add(e);
+        errorStrings.add(e.toString());
     }
 
     @Override
     public void error(SAXParseException e) throws SAXException {
-        errorStrings.add(e);
+        errorStrings.add(e.toString());
     }
 
     // Fatal errors are fatal. There are certain syntax errors that must be fixed
