@@ -1,5 +1,7 @@
 package CSC_346_Group3.src;
 
+import java.util.ArrayList;
+
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -21,61 +23,73 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class ParseHandler extends DefaultHandler {
 
+    ArrayList<String> errorStrings;
+
     @Override
     public void startDocument() {
         System.out.println("start of the document: ");
+        errorStrings = new ArrayList<String>();
     }
+
+    // These methods are called by the parsers with the content that it discovers
+    // in the XML file. These values are not stored unless YOU decide that they are useful.
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        String[] elements = {qName};
+        String[] elements = { qName };
         for (String element : elements) {
-            try {
-                System.out.println(element);
-            } catch (Exception e) {
-                System.out.println("ERROR IN PARSING ELEMENT START!");
-                e.printStackTrace();
-            }
+            System.out.println(element);
         }
+        // attribute parsing is thankfully easy with the SAX parser
         for (int i = 0; i < attributes.getLength(); i++) {
-            try {
-                System.out.println(attributes.getValue(i));
-            } catch (Exception e) {
-                System.out.println("ERROR IN PARSING ATTRIBUTE!");
-                e.printStackTrace();
-            }
+            System.out.println(attributes.getValue(i));
         }
     }
 
     @Override
     public void characters(char ch[], int start, int length) {
         for (int i = start; i < start + length; i++) {
-            try {
-                if (ch[i] != '\n' && ch[i] != '\t' && ch[i] != ' ') {
-                    System.out.print(ch[i]);
-                }
-            } catch (Exception e) {
-                System.out.println("ERROR IN PARSING CHAR!");
-                e.printStackTrace();
+            if (ch[i] != '\n' && ch[i] != '\t' && ch[i] != ' ') {
+                System.out.print(ch[i]);
             }
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) {
-        String[] elements = {qName};
+        String[] elements = { qName };
         for (String element : elements) {
-            try {
-                System.out.println(element);
-            } catch (Exception e) {
-                System.out.println("ERROR IN PARSING ELEMENT END!");
-                e.printStackTrace();
-            }
+            System.out.println(element);
         }
+    }
+
+    // You could, for example, save the errors/warnings in a temporary list, and
+    // then print them out at the end.
+    // This way, you could better separate the errors from the output.
+
+    @Override
+    public void warning(SAXParseException e) throws SAXException {
+        errorStrings.add(e);
+    }
+
+    @Override
+    public void error(SAXParseException e) throws SAXException {
+        errorStrings.add(e);
+    }
+
+    // Fatal errors are fatal. There are certain syntax errors that must be fixed
+    // for the parser to work.
+    @Override
+    public void fatalError(SAXParseException e) throws SAXException {
+        System.out.println("\n\nFATAL ERROR AT LINE " + e.getLineNumber() + ": \n" + e.getMessage());
     }
 
     @Override
     public void endDocument() {
         System.out.println("end of the document: ");
+        System.out.println("Errors: ");
+        for (String i : errorStrings) {
+            System.out.println(i);
+        }
     }
 }
