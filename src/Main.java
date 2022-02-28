@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 
 public class Main {
     public static void main(String[] args) {
-        File xmlFile = new File("test_xml_folder/weather.xml");
+        File xmlFile = new File("/test_xml_folder/weather.xml");
         ParseHandler handler = new ParseHandler();
 
         try {
