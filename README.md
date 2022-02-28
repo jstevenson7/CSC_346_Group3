@@ -6,7 +6,7 @@ This will contain the methods that are called when XML attributes are identified
 
 The first method is the **startDocument()** method which should look like this:
 ```Java
- @Override
+    @Override
     public void startDocument() {
         System.out.println("start of the document: ");
     }
@@ -15,7 +15,7 @@ The first method is the **startDocument()** method which should look like this:
 Next is the **startElement()** method, this pulls and prints the start of each element out of the file and should look similar to this: 
 ```Java
     @Override
-public void startElement(String uri, String localName, String qName, Attributes attributes) {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) {
         String[] elements = {qName};
         for (String element : elements) {
             try {
@@ -31,16 +31,16 @@ public void startElement(String uri, String localName, String qName, Attributes 
             } catch (Exception e) {
                 System.out.println("ERROR IN PARSING ELEMENT START!");
                 e.printStackTrace();
-                }
             }
         }
+    }
 ```
 
 After **startElement()** is the **characters()** method. This method is responsible for printing out the actual text in between the element tags. 
 It is similar to **startElement()** in that it uses a for loop to iterate through the file, but pulls out characters instead of *element*.
 The following code also uses the boolean *isRealString* to check if each character is not a line break or empty space before printing.
 ```Java
- @Override
+    @Override
     public void characters(char ch[], int start, int length) {
         boolean isRealString = false;
         for (int i = start; i < start + length; i++) {
@@ -63,7 +63,7 @@ The following code also uses the boolean *isRealString* to check if each charact
 After the **characters()** method is **endElement()** which is the same as the first *for* loop from the  **startElement()** method and looks 
 like this:
 ```Java
- @Override
+    @Override
     public void endElement(String uri, String localName, String qName) {
         String[] elements = {qName};
         for (String element : elements) {
@@ -81,9 +81,35 @@ like this:
 
 After **endElement()** the only thing left to do is signal the end of the document with **endDocument()** as follows:
 ```Java
- @Override
+    @Override
     public void endDocument() {
         System.out.println("end of the document: ");
+        System.out.println("Errors: ");
+        for (String i : errorStrings) {
+            System.out.println(i);
+        }
+    }
+```
+
+### Error Handling
+Error handing in the SAXParser is done by overriding individual error calls, in our example we will add these errors to an array
+and handle them at the end. These are our error overrides.
+```Java
+    @Override
+    public void warning(SAXParseException e) throws SAXException {
+        errorStrings.add(e.toString());
+    }
+
+    @Override
+    public void error(SAXParseException e) throws SAXException {
+        errorStrings.add(e.toString());
+    }
+
+    // Fatal errors are fatal. There are certain syntax errors that must be fixed
+    // for the parser to work.
+    @Override
+    public void fatalError(SAXParseException e) throws SAXException {
+        System.out.println("\n\nFATAL ERROR AT LINE " + e.getLineNumber() + ": \n" + e.getMessage());
     }
 ```
 
@@ -106,4 +132,4 @@ This parse method will call your object's methods when it encounters various XML
 
 The advantage of this package is that it allows you to decide how data should be stored. 
 This allows for greater space efficiency than a package that, for example, 
-just loads the entire XML file into memory so that you can whittle away unneccessary tags until you are left with the extracted data.
+just loads the entire XML file into memory so that you can whittle away unnecessary tags until you are left with the extracted data.
