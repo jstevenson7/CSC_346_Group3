@@ -76,7 +76,9 @@ like this:
         }
     }
 ```
+
 > :bulb: **Tip:** If you're having trouble tracking the parser add some extra output  to the *System.out.println(element);* line, such as  *System.out.println("This is an end element " + element);*
+
 After **endElement()** the only thing left to do is signal the end of the document with **endDocument()** as follows:
 ```Java
  @Override
