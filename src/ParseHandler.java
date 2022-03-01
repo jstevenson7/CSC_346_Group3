@@ -36,10 +36,7 @@ public class ParseHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
-        String[] elements = { qName };
-        for (String element : elements) {
-            System.out.println(element);
-        }
+        System.out.println(qName);
         // attribute parsing is thankfully easy with the SAX parser
         for (int i = 0; i < attributes.getLength(); i++) {
             System.out.println(attributes.getValue(i));
@@ -57,10 +54,7 @@ public class ParseHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) {
-        String[] elements = { qName };
-        for (String element : elements) {
-            System.out.println(element);
-        }
+        System.out.println(qName);
     }
 
     // You could, for example, save the errors/warnings in a temporary list, and
